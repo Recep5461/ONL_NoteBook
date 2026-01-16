@@ -71,7 +71,7 @@ def not_ekle(uid, not_baslik, not_icerik):
     not_al = [
             (uid, not_baslik, not_icerik),   
         ]
-    cursor.execute(
+    cursor.executemany(
             "INSERT INTO notes (user_id, title, content) VALUES (?, ?, ?)",
             not_al
         )
@@ -96,6 +96,7 @@ def notes_getir(id):
         })
 
     return notes 
+
 
 
 
