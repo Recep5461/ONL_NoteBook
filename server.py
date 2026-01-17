@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from db_fonks import get_user_id, user_ekle, user_sil, not_ekle, not_sil, notes_getir
+from db_fonks import get_user_id, user_ekle, user_sil, not_ekle, not_sil, notes_getir, not_guncelle
 
 app = FastAPI()
 
@@ -14,12 +14,17 @@ class User_Ekle(BaseModel):
     passw:str
 
 class Not_Ekleme(BaseModel):
-    user_id: int
-    title: str
-    content: str
+    user_id:int
+    title:str
+    content:str
+
+class Not_Guncelle(BaseModel):
+    not_id:int
+    guncel_baslik:str
+    guncel_not:str
 
 class Not_and_User_Silme(BaseModel):
-    not_or_user_id: int
+    not_or_user_id:int
    
 # ////////////////////////////////////////////////////////////////////////////
 #                        ___ user işlemleri ___
@@ -65,6 +70,14 @@ def not_silme(not_data: Not_and_User_Silme):
     )
     return {"status": "Not silindi"}
 
+@app.post("/not_guncelle")
+def not_guncelleme(not_data: Not_Guncelle):
+    not_guncelle(
+        not_data.not_id,
+        not_data.guncel_baslik,
+        not_data.guncel_not
+    )
+    return {"status": "Not güncellendi"}
 
 
 
@@ -75,3 +88,4 @@ def home():
     return {
         "status": f"Online NoteBook API aktif!"
     }
+
