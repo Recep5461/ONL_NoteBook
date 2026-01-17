@@ -98,6 +98,19 @@ def notes_getir(id):
     return notes 
 
 
+def not_guncelle(not_id, yeni_baslik, yeni_icerik):
+    conn = get_connection_notes()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE notes SET title = ?, content = ? WHERE id = ?",
+        (yeni_baslik, yeni_icerik, not_id)
+    )
+
+    conn.commit()
+    conn.close()
+    return True
+
 
 
 
